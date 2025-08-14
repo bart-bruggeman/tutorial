@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<tutorial xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	      xsi:noNamespaceSchemaLocation="schema/tutorial.xsd"
+	id="junit-5" name="JUnit 5" filename="junit-5.html">
+
+	<section title="Dependencies &amp; plugins">
+		<tabs id="junit-5-dependencies-and-plugins" info="Maven and Gradle dependencies and plugins">
+			<tab id="junit-5-dependencies-and-plugins-maven" label="Maven">
+				<codesnippet language="xml" info="Core JUnit 5 annotations and assertions">
+					<![CDATA[
+					<dependency>
+						<groupId>org.junit.jupiter</groupId>
+						<artifactId>junit-jupiter-api</artifactId>
+						<version>5.x.x</version> <!-- e.g.: 5.8.2 -->
+						<scope>test</scope>
+					</dependency>
+					]]>
+				</codesnippet>
+				<codesnippet language="xml" info="Core JUnit 5 test engine that actually runs the tests">
+					<![CDATA[
+					<dependency>
+						<groupId>org.junit.jupiter</groupId>
+						<artifactId>junit-jupiter-engine</artifactId>
+						<version>5.x.x</version> <!-- e.g.: 5.8.2 -->
+						<scope>test</scope>
+					</dependency>
+					]]>
+				</codesnippet>
+				<codesnippet language="xml" info="Optional JUnit 5 Jupiter Params for parameterized tests">
+					<![CDATA[
+					<dependency>
+						<groupId>org.junit.jupiter</groupId>
+						<artifactId>junit-jupiter-params</artifactId>
+						<version>5.x.x</version> <!-- e.g.: 5.8.2 -->
+						<scope>test</scope>
+					</dependency>
+					]]>
+				</codesnippet>
+				<codesnippet language="xml" info="Optional JUnit 5 Vintage Engine to run JUnit 4 tests with JUnit 5">
+					<![CDATA[
+					<dependency>
+						<groupId>org.junit.vintage</groupId>
+						<artifactId>junit-vintage-engine</artifactId>
+						<version>5.x.x</version> <!-- e.g.: 5.8.2 -->
+						<scope>test</scope>
+					</dependency>
+					]]>
+				</codesnippet>
+				<codesnippet language="xml" info="Maven Surefire dependency to run tests with JUnit 5">
+					<![CDATA[
+					<dependency>
+						<groupId>org.apache.maven.surefire</groupId>
+						<artifactId>surefire-api</artifactId>
+						<version>2.22.2</version> <!-- Ensure this version is compatible with JUnit 5 -->
+						<scope>test</scope>
+					</dependency>
+					]]>
+				</codesnippet>
+				<codesnippet language="xml" info="Maven Surefire plugin to run tests with JUnit 5">
+					<![CDATA[
+					<build>
+						<plugins>
+							<plugin>
+								<groupId>org.apache.maven.plugins</groupId>
+								<artifactId>maven-surefire-plugin</artifactId>
+								<version>3.0.0-M5</version> <!-- Ensure this version is compatible with JUnit 5 -->
+								<configuration>
+									<dependenciesToScan>
+										<dependency>org.junit.jupiter</dependency>
+										<dependency>org.junit.vintage</dependency>
+									</dependenciesToScan>
+								</configuration>
+							</plugin>
+						</plugins>
+					</build>
+					]]>
+				</codesnippet>
+			</tab>
+			<tab id="junit-5-dependencies-and-plugins-gradle" label="Gradle">
+				<codesnippet language="kotlin" info="Core JUnit 5 annotations, assertions and test engine">
+					testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2' // e.g.: 5.8.2
+					testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.8.2' // e.g.: 5.8.2
+				</codesnippet>
+				<codesnippet language="kotlin" info="Optional JUnit 5 Jupiter Params for parameterized tests">
+					testImplementation 'org.junit.jupiter:junit-jupiter-params:5.8.2' // e.g.: 5.8.2
+				</codesnippet>
+				<codesnippet language="kotlin" info="Optional JUnit 5 Vintage Engine to run JUnit 4 tests with JUnit 5">
+					testImplementation 'org.junit.vintage:junit-vintage-engine:5.8.2' // e.g.: 5.8.2
+				</codesnippet>
+				<codesnippet language="kotlin" info="RunJUnit 5 tests">
+					test {
+						useJUnitPlatform()
+					}
+				</codesnippet>
+			</tab>
+		</tabs>
+	</section>
+
+	<section title="Java import statements">
+		<codesnippet language="java" info="Next import statements are necessary">
+			import org.junit.jupiter.api.*; 
+			import static org.junit.jupiter.api.Assertions.*;
+		</codesnippet>
+	</section>
+
+	<section title="Class/method access modifiers">
+		<codesnippet language="java" info="No class/method access modifiers are necessary">
+			...
+			class MyTest {
+				...
+				@Test
+				void testMyMethod() {
+					...
+				}
+				...
+			}
+		</codesnippet>
+	</section>
+
+	<section title="Annotations">
+		<tabs id="junit-5-annotations" info="Next annotations control the setup, execution, teardown, and conditional disabling of test methods in JUnit 5">
+			<tab id="junit-5-annotations-beforeall" label="@BeforeAll" info="Runs once before all tests in the class; used for one-time setup">
+				<codesnippet language="java">
+					@BeforeAll
+					static void setupBeforeAll() {
+						...
+					}
+				</codesnippet>
+			</tab>
+			<tab id="junit-5-annotations-beforeach" label="@BeforeEach" info="Runs before each individual test method; used to set up test conditions">
+				<codesnippet language="java">
+					@BeforeEach
+					void setupBeforeEach() {
+						...
+					}
+				</codesnippet>
+			</tab>
+			<tab id="junit-5-annotations-aftereach" label="@AfterEach" info="Runs after each individual test method; used for cleanup after tests">
+				<codesnippet language="java">
+					@AfterEach
+					void teardownAfterEach() {
+						...
+					}
+				</codesnippet>
+			</tab>
+			<tab id="junit-5-annotations-afterall" label="@AfterAll" info="Runs once after all tests in the class; used for one-time cleanup">
+				<codesnippet language="java">
+					@AfterAll
+					static void teardownAfterAll() {
+						...
+					}
+				</codesnippet>
+			</tab>
+			<tab id="junit-5-annotations-disabled" label="@Disabled" info="Disables a test method or class so it will not run">
+				<codesnippet language="java" info="Example of a disabled test class">
+					@Disabled
+					class MyTest {
+
+						@Test
+						void testMyMethod1() {
+							...
+						}
+						
+						@Test
+						void testMyMethod2() {
+							...
+						}
+					}
+				</codesnippet>
+				<codesnippet language="java" info="Example of a disabled test method">
+					class MyTest {
+						...
+						@Test
+						void testMyMethod1() {
+							...
+						}
+						
+						@Disabled
+						@Test
+						void testMyMethod2() {
+							...
+						}
+					}
+				</codesnippet>
+			</tab>
+			<tab id="junit-5-annotations-test" label="@Test" info="Marks a method as a test case to be executed">
+				<codesnippet language="java">
+					@Test
+					void testMyMethod() {
+						...
+					}
+				</codesnippet>
+			</tab>
+		</tabs>
+	</section>
+
+	<section title="How to test exceptions">
+		<codesnippet language="java" info="Complete example">
+            <![CDATA[
+			class MyTest {
+				
+				private final MyClass myClass = new MyClass();
+				
+				// test occurence of an Exception and message of an Exception
+				@Test
+				void testExceptionThrownWithMessage() {
+					Exception e = assertThrows(IllegalArgumentException.class,
+						() -> {	myClass.methodThatThrowsIllegalArgumentException(someIllegalValue); });
+					assertEquals("Invalid argument", e.getMessage());
+				}
+
+				// test no occurence of an exception
+				@Test
+				void testMethodDoesNotThrowException() {
+					MyClass myClass = new MyClass();
+					assertDoesNotThrow(
+						() -> myClass.methodThatShouldNotThrowException());
+				}
+			}
+            ]]>
+		</codesnippet>
+	</section>
+
+	<section title="Mockito integration">
+		<tabs id="junit-5-mockito-integration" info="Mockito integration with JUnit 5 can be done in two ways: class-level integration and method-level integration">		
+			<tab id="junit-5-mockito-integration-class-level" label="Class level integration">
+				<codesnippet language="java" info="Add next import statements">
+					import org.junit.jupiter.api.extension.ExtendWith;
+					import org.mockito.junit.jupiter.MockitoExtension;
+				</codesnippet>
+				<codesnippet language="java" info="Integrate Mockito with the JUnit 5 lifecycle">
+					@ExtendWith(MockitoExtension.class)
+				</codesnippet>
+				<codesnippet language="java" info="Complete example">
+                    <![CDATA[
+					import org.junit.jupiter.api.extension.ExtendWith;
+					import org.junit.jupiter.api.Test;
+					import org.mockito.junit.jupiter.MockitoExtension;
+					import org.mockito.InjectMocks;
+					import org.mockito.Mock;
+					import java.util.Optional;
+					import static org.junit.jupiter.api.Assertions.*;
+					import static org.mockito.Mockito.when;
+					
+					@ExtendWith(MockitoExtension.class)
+					public class UserServiceTest {
+
+						@Mock
+						private UserRepository userRepository;
+						
+						@InjectMocks
+						private UserService userService;
+						
+						@Test
+						void shouldReturnUserById() {
+							when(userRepository.findById(1L)).thenReturn(Optional.of(new User(1L, "John")));
+							User user = userService.getUserById(1L);
+							assertEquals("John", user.getName());
+						}
+						
+						@Test
+						void shouldThrowExceptionIfUserNotFound() {
+							when(userRepository.findById(2L)).thenReturn(Optional.empty());
+							assertThrows(UserNotFoundException.class, () -> userService.getUserById(2L));
+						}
+
+					}
+                    ]]>
+				</codesnippet>
+			</tab>
+			<tab id="junit-5-mockito-integration-method-level" label="Method level integration">
+				<codesnippet language="java" info="Add next import statements">
+					import org.mockito.MockitoAnnotations;
+				</codesnippet>
+				<codesnippet language="java" info="explicitly create mocks using Mockito.mock() or initialize annotated mocks with MockitoAnnotations.openMocks(this) within each test method">
+					@BeforeEach
+					void setUp() { 
+						MockitoAnnotations.openMocks(this);
+					}
+				</codesnippet>
+				<codesnippet language="java" info="Complete example">
+                    <![CDATA[
+					import org.junit.jupiter.api.BeforeEach;
+					import org.junit.jupiter.api.Test;
+					import org.mockito.InjectMocks;
+					import org.mockito.Mock;
+					import org.mockito.MockitoAnnotations;
+					import java.util.Optional;
+					import static org.junit.jupiter.api.Assertions.*;
+					import static org.mockito.Mockito.when;
+					
+					public class UserServiceTest {
+					
+						@Mock
+						private UserRepository userRepository;
+					
+						@InjectMocks
+						private UserService userService;
+						
+						@BeforeEach
+						void setUp() {
+							MockitoAnnotations.openMocks(this);
+						}
+						
+						@Test
+						void shouldReturnUserById() {
+							when(userRepository.findById(1L)).thenReturn(Optional.of(new User(1L, "John")));
+							User user = userService.getUserById(1L);
+							assertEquals("John", user.getName());
+						}
+						
+						@Test
+						void shouldThrowExceptionIfUserNotFound() {
+							when(userRepository.findById(2L)).thenReturn(Optional.empty());
+							assertThrows(UserNotFoundException.class, () -> userService.getUserById(2L));
+						}
+
+					}
+                    ]]>
+				</codesnippet>
+			</tab>
+		</tabs>
+	</section>
+	
+</tutorial>

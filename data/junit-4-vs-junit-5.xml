@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<tutorial xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	      xsi:noNamespaceSchemaLocation="schema/tutorial.xsd"
+	id="junit-4-vs-junit-5" name="JUnit 4 vs JUnit 5" filename="junit-4-vs-junit-5.html">
+
+	<table>
+		<header>
+			<headeritem> </headeritem>
+			<headeritem>JUnit 4</headeritem>
+			<headeritem>JUnit 5</headeritem>
+		</header>
+		<data>
+			<dataitem>Dependencies</dataitem>
+			<dataitem>junit:junit:4.x.x</dataitem>
+			<dataitemlist>
+				<listitem>org.junit.jupiter:junit-jupiter-api:5.x.x</listitem>
+				<listitem>org.junit.jupiter:junit-jupiter-engine:5.x.x</listitem>
+				<listitem>org.junit.jupiter:junit-jupiter-params:5.x.x</listitem>
+				<listitem>org.junit.vintage:junit-vintage-engine:5.x.x</listitem>
+				<listitem>org.junit.platform:junit-platform-runner:1.x.x</listitem>
+            </dataitemlist>
+		</data>
+		<data>
+			<dataitem>Import statements	</dataitem>
+			<dataitemlist>
+				<listitem>import org.junit.*;</listitem>
+				<listitem>import static org.junit.Assert.*;</listitem>
+			</dataitemlist>
+			<dataitemlist>
+				<listitem>import org.junit.jupiter.api.*;</listitem>
+				<listitem>import static org.junit.jupiter.api.Assertions.*;</listitem>
+			</dataitemlist>
+		</data>
+		<data>
+			<dataitem>Class and method access modifier</dataitem>
+			<dataitem>public</dataitem>
+			<dataitem>not necessary</dataitem>
+		</data>
+		<data>
+			<dataitem>Speciale annotations</dataitem>
+			<dataitemlist>
+				<listitem>@BeforeClass</listitem>
+				<listitem>@Before</listitem>
+				<listitem>@After</listitem>
+				<listitem>@AfterClass</listitem>
+				<listitem>@Ignore</listitem>
+				<listitem>@Test</listitem>
+			</dataitemlist>
+			<dataitemlist>
+				<listitem>@BeforeAll</listitem>
+				<listitem>@BeforeEach</listitem>
+				<listitem>@AfterEach</listitem>
+				<listitem>@AfterAll</listitem>
+				<listitem>@Disabled</listitem>
+				<listitem>@Test</listitem>
+			</dataitemlist>
+		</data>
+		<data>
+			<dataitem>Exception testing</dataitem>
+			<dataitem>@Test(expected = Exception.class)</dataitem>
+			<dataitem>assertThrows(Exception.class, () -&gt; method());</dataitem>
+		</data>
+		<data>
+			<dataitem>Mockito integratie (class level)</dataitem>
+			<dataitem>@RunWith(MockitoJUnitRunner.class)</dataitem>
+			<dataitem>@ExtendWith(MockitoExtension.class)</dataitem>
+		</data>
+		<data>
+			<dataitem>Mockito integratie (method level)</dataitem>
+			<dataitem>MockitoAnnotations.initMocks(this);</dataitem>
+			<dataitem>MockitoAnnotations.openMocks(this);</dataitem>
+		</data>
+	</table>
+
+</tutorial>

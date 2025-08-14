@@ -1,0 +1,135 @@
+#!/usr/bin/env bash
+
+# valid options
+VALID_PERSONS=("bart" "femke" "mieke")
+VALID_LANGUAGES=("nl" "fr" "en")
+VALID_FORMATS=("pdf" "html")
+
+# show usage
+show_usage() {
+    echo
+    echo "Usage:"
+    echo "  cv [bart|femke|mieke] [nl|fr|en] [pdf|html]"
+    echo
+    exit 1
+}
+
+# check if value is in list
+is_valid() {
+    local value="$1"
+    shift
+    for v in "$@"; do
+        [[ "$v" == "$value" ]] && return 0
+    done
+    return 1
+}
+
+# generate CV function
+generate_cv() {
+    local person="$1" language="$2" format="$3"
+
+    echo "Generating CV [person=$person, language=$language, format=$format]"
+    echo
+
+    # versions
+    FOP_VERSION="2.11"
+    SAXON_HE_VERSION="12.8"
+    XML_RESOLVER_VERSION="5.3.3"
+    XMLVALIDATOR_VERSION="1.0-SNAPSHOT"
+    YUI_COMPRESSOR_VERSION="2.4.8"
+    HTML_COMPRESSOR_VERSION="1.5.2"
+
+    # directories
+    FOP_HOME="library/fop-$FOP_VERSION"
+    FOP_CONFIG="config"
+    SAXON_HE_HOME="library/saxon-he-$SAXON_HE_VERSION"
+    XMLVALIDATOR_HOME="library/xmlvalidator-$XMLVALIDATOR_VERSION"
+    YUI_COMPRESSOR_HOME="library/yuicompressor-$YUI_COMPRESSOR_VERSION"
+    HTML_COMPRESSOR_HOME="library/htmlcompressor-$HTML_COMPRESSOR_VERSION"
+    OUT_DIR="_generated/$person/$language"
+    OUT_DIR_PDF="$OUT_DIR/pdf"
+    OUT_DIR_HTML="$OUT_DIR/html"
+
+    # jars
+    SAXON_HE_JAR="$SAXON_HE_HOME/saxon-he-$SAXON_HE_VERSION.jar"
+    XML_RESOLVER_JAR="$SAXON_HE_HOME/xmlresolver-$XML_RESOLVER_VERSION.jar"
+    YUI_COMPRESSOR_JAR="$YUI_COMPRESSOR_HOME/yuicompressor-$YUI_COMPRESSOR_VERSION.jar"
+    HTML_COMPRESSOR_JAR="$HTML_COMPRESSOR_HOME/htmlcompressor-$HTML_COMPRESSOR_VERSION.jar"
+
+    # validate XML
+    java -cp "$XMLVALIDATOR_HOME" be.bruggeman.cv.XmlValidator data/schema/cv.xsd "data/cv_${person}.xml" || exit $?
+
+    mkdir -p "$OUT_DIR"
+
+    if [[ "$format" == "pdf" ]]; then
+        # CV as PDF document
+        mkdir -p "$OUT_DIR_PDF"
+        # generate FO
+        java -cp "$SAXON_HE_JAR:$XML_RESOLVER_JAR" net.sf.saxon.Transform \
+            -s:"data/cv_${person}.xml" -xsl:"style/pdf/cv.xsl" \
+            -o:"$OUT_DIR_PDF/cv.fo" user="$person" language="$language"
+        # generate PDF
+        "$FOP_HOME/fop" -q -c "$FOP_CONFIG/fop.xconf" -fo "$OUT_DIR_PDF/cv.fo" -pdf "$OUT_DIR_PDF/cv.pdf" > /dev/null 2>&1
+        # remove FO
+        rm -f "$OUT_DIR_PDF/cv.fo"
+    elif [[ "$format" == "html" ]]; then
+        # CV as HTML document
+        mkdir -p "$OUT_DIR_HTML"
+        # generate HTML
+        java -cp "$SAXON_HE_JAR:$XML_RESOLVER_JAR" net.sf.saxon.Transform \
+            -s:"data/cv_${person}.xml" -xsl:"style/html/cv.xsl" \
+            -o:"$OUT_DIR_HTML/cv.html" user="$person" language="$language" format="$format"
+        cp -r assets "$OUT_DIR_HTML/assets"
+        # minify
+        java -jar "$YUI_COMPRESSOR_JAR" "$OUT_DIR_HTML/assets/css/cv.css" -o "$OUT_DIR_HTML/assets/css/cv.min.css"
+        java -jar "$YUI_COMPRESSOR_JAR" "$OUT_DIR_HTML/assets/js/cv.js" -o "$OUT_DIR_HTML/assets/js/cv.min.js"
+        java -jar "$HTML_COMPRESSOR_JAR" "$OUT_DIR_HTML/cv.html" -o "$OUT_DIR_HTML/cv.min.html"
+        # remove unminified files
+        rm -f "$OUT_DIR_HTML/assets/css/cv.css" "$OUT_DIR_HTML/assets/js/cv.js" "$OUT_DIR_HTML/cv.html"
+        # renmae cv.min.html to cv.html
+        mv "$OUT_DIR_HTML/cv.min.html" "$OUT_DIR_HTML/cv.html"
+    fi
+}
+
+# help
+if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+    show_usage
+fi
+
+# parameters
+ARGS=("$@")
+if (( ${#ARGS[@]} > 3 )); then
+    show_usage
+fi
+
+# init helper fields
+PERSONS=()
+LANGUAGES=()
+FORMATS=()
+
+# process arguments
+for arg in "${ARGS[@]}"; do
+    if is_valid "$arg" "${VALID_PERSONS[@]}"; then
+        PERSONS+=("$arg")
+    elif is_valid "$arg" "${VALID_LANGUAGES[@]}"; then
+        LANGUAGES+=("$arg")
+    elif is_valid "$arg" "${VALID_FORMATS[@]}"; then
+        FORMATS+=("$arg")
+    else
+        show_usage
+    fi
+done
+
+# default values
+[[ ${#PERSONS[@]} -eq 0 ]] && PERSONS=("${VALID_PERSONS[@]}")
+[[ ${#LANGUAGES[@]} -eq 0 ]] && LANGUAGES=("${VALID_LANGUAGES[@]}")
+[[ ${#FORMATS[@]} -eq 0 ]] && FORMATS=("${VALID_FORMATS[@]}")
+
+# generate CVs
+for p in "${PERSONS[@]}"; do
+    for l in "${LANGUAGES[@]}"; do
+        for f in "${FORMATS[@]}"; do
+            generate_cv "$p" "$l" "$f"
+        done
+    done
+done

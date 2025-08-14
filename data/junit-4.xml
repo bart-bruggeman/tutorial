@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<tutorial xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	      xsi:noNamespaceSchemaLocation="schema/tutorial.xsd"
+	id="junit-4" name="JUnit 4" filename="junit-4.html">
+
+	<section title="Dependencies &amp; plugins">
+		<tabs id="junit-4-dependencies-and-plugins" info="Maven and Gradle dependencies and plugins">
+			<tab id="junit-4-dependencies-and-plugins-maven" label="Maven">
+				<codesnippet language="xml" info="JUnit 4 annotations and assertions">
+					<![CDATA[
+					<dependency>
+						<groupId>junit</groupId>
+						<artifactId>junit</artifactId>
+						<version>4.x.x</version> <!-- e.g.: 4.13.2 -->
+						<scope>test</scope>
+					</dependency>
+					]]>
+				</codesnippet>
+			</tab>
+			<tab id="junit-4-dependencies-and-plugins-gradle" label="Gradle">
+				<codesnippet language="kotlin" info="JUnit 4 annotations and assertions">
+					testImplementation 'junit:junit:4.x.x' // e.g.: 4.13.2
+				</codesnippet>
+			</tab>
+		</tabs>
+	</section>
+
+	<section title="Java import statements">
+		<codesnippet language="java" info="Next import statements are necessary">
+			import org.junit.*;
+			import static org.junit.Assert.*;
+		</codesnippet>
+	</section>
+
+	<section title="Class/method access modifiers">
+		<codesnippet language="java" info="Class/method access modifiers are necessary">
+			...
+			public class MyTest {
+				...
+				@Test
+				public void testMyMethod() {
+					...
+				}
+				...
+			}
+		</codesnippet>
+	</section>
+
+	<section title="Annotations">
+		<tabs id="junit-4-annotations" info="Next annotations control the setup, execution, teardown, and conditional disabling of test methods in JUnit 4">
+			<tab id="junit-4-annotations-beforeclass" label="@BeforeClass" info="Runs once before all tests in the class; used for one-time setup">
+				<codesnippet language="java">
+					@BeforeClass
+					public static void setupBeforeClass() {
+						...
+					}
+				</codesnippet>
+			</tab>
+			<tab id="junit-4-annotations-before" label="@Before" info="Runs before each individual test method; used to set up test conditions">
+				<codesnippet language="java">
+					@Before
+					public void setupBefore() {
+						...
+					}
+				</codesnippet>
+			</tab>
+			<tab id="junit-4-annotations-after" label="@After" info="Runs after each individual test method; used for cleanup after tests">
+				<codesnippet language="java">
+					@After
+					public void teardownAfter() {
+						...
+					}
+				</codesnippet>
+			</tab>
+			<tab id="junit-4-annotations-afterclass" label="@AfterClass" info="Runs once after all tests in the class; used for one-time cleanup">
+				<codesnippet language="java">
+					@AfterClass
+					public static void teardownAfterClass() {
+						...
+					}
+				</codesnippet>
+			</tab>
+			<tab id="junit-4-annotations-ignore" label="@Ignore" info="Disables a test method or class so it will not run">
+				<codesnippet language="java" info="Example of a disabled test class">
+					...
+					@Ignore
+					public class MyTest {
+						...
+						@Test
+						public void testMyMethod1() {
+							...
+						}
+						
+						@Test
+						public void testMyMethod2() {
+							...
+						}
+						...
+					}
+				</codesnippet>
+				<codesnippet language="java" info="Example of a disabled test method">
+					...
+					public class MyTest {
+						...
+						@Test
+						public void testMyMethod1() {
+							...
+						}
+						
+						@Ignore
+						@Test
+						public void testMyMethod2() {
+							...
+						}
+						...
+					}
+				</codesnippet>
+			</tab>
+			<tab id="junit-5-annotations-test" label="@Test" info="Marks a method as a test case to be executed">
+				<codesnippet language="java">
+					@Test
+					public void testMyMethod() {
+						...
+					}
+				</codesnippet>
+			</tab>
+		</tabs>
+	</section>
+
+	<section title="How to test exceptions">
+		<codesnippet language="java" info="Complete example">
+            <![CDATA[
+			import org.junit.Test;
+			import static org.junit.Assert.*;
+
+			public class MyTest {
+
+				private final MyClass myClass = new MyClass();
+
+				// test occurence of an Exception
+				@Test(expected = IllegalArgumentException.class)
+				public void testExceptionThrown() {
+					myClass.methodThatThrowsIllegalArgumentException(someIllegalValue);
+				}
+
+				// test message of an Exception
+				@Test
+				public void testExceptionMessage() {
+					try {
+						myClass.methodThatThrowsIllegalArgumentException(someIllegalValue);
+						fail("Expected exception was not thrown");
+					} catch (IllegalArgumentException e) {
+						assertEquals("Invalid argument", e.getMessage());
+					}
+				}
+
+				// test no occurence of an exception
+				@Test
+				public void methodDoesNotThrowException() {
+					myClass.methodThatShouldNotThrowException();
+				}
+
+			}
+            ]]>
+		</codesnippet>
+	</section>
+
+	<section title="Mockito integration">
+		<tabs id="junit-4-mockito-integration" info="Mockito integration with JUnit 4 can be done in two ways: class-level integration and method-level integration.">		
+			<tab id="junit-4-mockito-integration-class-level" label="Class level integration">
+				<codesnippet language="java" info="Add next import statements">
+					import org.junit.runner.RunWith;
+					import org.mockito.junit.MockitoJUnitRunner;
+				</codesnippet>
+				<codesnippet language="java" info="Integrate Mockito with the JUnit 4 lifecycle">
+					@RunWith(MockitoJUnitRunner.class)
+				</codesnippet>
+				<codesnippet language="java" info="Complete example">
+                    <![CDATA[
+					import org.junit.runner.RunWith;
+					import org.mockito.junit.MockitoJUnitRunner;
+					
+					@RunWith(MockitoJUnitRunner.class)
+					public class MyTest {
+					}
+                    ]]>
+				</codesnippet>
+			</tab>
+			<tab id="junit-4-mockito-integration-method-level" label="Method level integration">
+				<codesnippet language="java" info="Add next import statements">
+					import org.mockito.MockitoAnnotations;
+				</codesnippet>
+				<codesnippet language="java" info="explicitly create mocks using Mockito.mock() or initialize annotated mocks with MockitoAnnotations.initMocks(this) within each test method">
+					@Before
+					public void setUp() {
+						MockitoAnnotations.initMocks(this);
+					}
+				</codesnippet>
+				<codesnippet language="java" info="Complete example">
+                    <![CDATA[
+					import org.junit.*;
+					import org.mockito.MockitoAnnotations;
+
+					public class MyTest {
+
+						@Before
+						public void setUp() {
+							MockitoAnnotations.initMocks(this);
+						}
+					}
+                    ]]>
+				</codesnippet>
+			</tab>
+		</tabs>
+	</section>
+	
+</tutorial>

@@ -1,0 +1,24 @@
+#!/bin/bash
+
+clear
+
+# initialize _generated directory
+GENERATED_HOME="_generated"
+
+# display usage message
+show_usage() {
+    echo
+    echo "Usage: $(basename "$0")"
+    echo
+    exit 1
+}
+
+# validate arguments and clean up
+if [ $# -gt 0 ]; then
+    # invalid number of arguments
+    show_usage
+fi
+
+rm -rf "$GENERATED_HOME"
+
+exit 0

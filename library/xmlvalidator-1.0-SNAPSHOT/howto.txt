@@ -1,0 +1,5 @@
+compile from C:\Users\barbru\IdeaProjects\test\cv\library\xmlvalidator-1.0-SNAPSHOT
+command: javac be\bruggeman\cv\XmlValidator.java
+
+compile from C:\Users\barbru\IdeaProjects\test\cv
+command: javac library\xmlvalidator-1.0-SNAPSHOT\be\bruggeman\cv\XmlValidator.java

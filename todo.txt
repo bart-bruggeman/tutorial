@@ -1,0 +1,77 @@
+aanpassen in functie van onderstaande:
+
+xml naar xsl genereert html en pdf (xslt 3.0, fop 2.11)
+
+2 aparte xsl bestanden 1 voor html en 1 voor pdf. Elk xsl bestand heeft een style.xsl bestand.
+Een style.xsl bestand bevat een ganse resem gedefiniëerde variabelen (afstanden in mm voor pdf, pt en rem voor html.
+
+common bevat zeer veel gedefiniëerde attributen zodat een specifiec attribuut hiermee kan worden samengesteld. Dit lijkt me handig als ik bv voor pdf of html verschillende versies wil maken
+
+voorbeeld van een style.xsl bestand:
+
+<!-- common can be used in specific -->
+
+<!-- common - font family -->
+<xsl:attribute-set name="font-family-calibri">
+	<xsl:attribute name="font-family">Calibri</xsl:attribute>
+</xsl:attribute-set>
+
+<!-- common - font size -->
+<xsl:attribute-set name="font-size-10pt">
+	<xsl:attribute name="font-size">10pt</xsl:attribute>
+</xsl:attribute-set>
+
+<xsl:attribute-set name="font-size-12pt">
+	<xsl:attribute name="font-size">12pt</xsl:attribute>
+</xsl:attribute-set>
+
+<xsl:attribute-set name="font-size-14pt">
+	<xsl:attribute name="font-size">14pt</xsl:attribute>
+</xsl:attribute-set>
+
+<xsl:attribute-set name="font-size-16pt">
+	<xsl:attribute name="font-size">16pt</xsl:attribute>
+</xsl:attribute-set>
+
+<!-- common - font weight -->
+<xsl:attribute-set name="font-weight-normal">
+	<xsl:attribute name="font-weight">normal</xsl:attribute>
+</xsl:attribute-set>
+	
+<xsl:attribute-set name="font-weight-bold">
+	<xsl:attribute name="font-weight">bold</xsl:attribute>
+</xsl:attribute-set>
+
+<-- common - margins -->
+<xsl:attribute-set name="margin-0">
+	<xsl:attribute name="margin">0</xsl:attribute>
+</xsl:attribute-set>
+<xsl:attribute-set name="margin-bottom-0">
+	<xsl:attribute name="margin-bottom">0</xsl:attribute>
+</xsl:attribute-set>
+<xsl:attribute-set name="margin-left-0">
+	<xsl:attribute name="margin-left">0</xsl:attribute>
+</xsl:attribute-set>
+<xsl:attribute-set name="margin-right-0">
+	<xsl:attribute name="margin-right">0</xsl:attribute>
+</xsl:attribute-set>
+<xsl:attribute-set name="margin-top-0">
+	<xsl:attribute name="margin-top">0</xsl:attribute>
+</xsl:attribute-set>
+
+<xsl:attribute-set name="margin-top-2mm">
+	<xsl:attribute name="margin-top">2mm</xsl:attribute>
+</xsl:attribute-set>
+
+<xsl:attribute-set name="margin-reset use-attribute-sets="margin-0 margin-bottom-0 margin-left-0 margin-right-0 margin-top-0"/>
+
+
+
+<!-- specific - section title -->
+<xsl:attribute-set name="section-title" use-attribute-sets="font-family-calibri font-size-14pt font-weight-normal margin-reset margin-top-2mm"/> <!-- de margins zijn ok
+
+en mss in een ander style document (bv: style-big):
+<xsl:attribute-set name="section-title" use-attribute-sets="font-family-calibri font-size-16pt font-weight-bold margin-reset margin-top-2mm"/>
+
+
+is dit zo een goede manier van oplossen: JA
