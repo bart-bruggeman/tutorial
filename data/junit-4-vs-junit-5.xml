@@ -2,9 +2,9 @@
 
 <tutorial xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	      xsi:noNamespaceSchemaLocation="schema/tutorial.xsd"
-	id="junit-4-vs-junit-5" name="JUnit 4 vs JUnit 5" filename="junit-4-vs-junit-5.html">
+	id="junit-4-vs-junit-5" name="JUnit 4 and JUnit 5 comparison" filename="junit-4-vs-junit-5.html">
 
-	<table>
+	<table title="JUnit 4 vs JUnit 5">
 		<header>
 			<headeritem> </headeritem>
 			<headeritem>JUnit 4</headeritem>

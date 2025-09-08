@@ -4,6 +4,7 @@
   ------------------------------------------------------------------------------
 */
 :root {
+	--bg-body: #f8f9fa;
 	--text-body: #212529;
 	--bg-card: #fdfdfd;
 	--text-card: #212529;
@@ -261,4 +262,48 @@ nav.navbar {
 
 :root[data-bs-theme='dark'] footer a i {
 	color: var(--text-body);
+}
+
+/*
+  ------------------------------------------------------------------------------
+  section card
+  ------------------------------------------------------------------------------
+*/
+.anchor-offset {
+	display: block;
+	position: relative;
+	top: -138px;
+	visibility: hidden;
+	height: 0;
+}
+
+.section-card {
+	background-color: var(--bg-card);
+	color: var(--text-card);
+	border: 1px solid #dee2e6;
+	border-radius: 0.5rem;
+	padding: 2rem 1.5rem;
+	margin-bottom: 3rem;
+	box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 0.075);
+}
+
+
+.section-card .row.mb-2:last-of-type,
+.section-card .company:last-child,
+.section-card .company .client:last-child,
+.section-card .table {
+	margin-bottom: 0 !important;
+}
+
+.section-title {
+	font-size: 1.5rem;
+	font-weight: 500;
+	letter-spacing: 0.3px;
+	border-bottom: 1px solid #dee2e6;
+	padding-bottom: 0.5rem;
+	margin-bottom: 1.5rem;
+}
+
+:root[data-bs-theme='dark'] .section-card .table.table-hover tbody tr:hover {
+	background-color: var(--nord3) !important;
 }

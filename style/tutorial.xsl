@@ -82,8 +82,10 @@
 	</xsl:template>
 
 	<xsl:template match="section">
-		<h5><xsl:value-of select="@title"/></h5>
-		<xsl:apply-templates/>
+		<div class="section-card">
+			<h2 class="section-title"><xsl:value-of select="@title"/></h2>
+			<xsl:apply-templates/>
+		</div>
 	</xsl:template>
 
 	<xsl:template match="tabs">
@@ -130,9 +132,12 @@
 
 	<!-- table -->
 	<xsl:template match="table">
-		<table class="table table-bordered">
-			<xsl:apply-templates/>
-		</table>
+		<div class="section-card">
+			<h2 class="section-title"><xsl:value-of select="@title"/></h2>
+			<table class="table table-bordered">
+				<xsl:apply-templates/>
+			</table>
+		</div>
 	</xsl:template>
 
 	<xsl:template match="header">
