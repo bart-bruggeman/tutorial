@@ -79,19 +79,27 @@
 			</tab>
 			<tab id="junit-5-dependencies-and-plugins-gradle" label="Gradle">
 				<codesnippet language="kotlin" info="Core JUnit 5 annotations, assertions and test engine">
+					<![CDATA[
 					testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2' // e.g.: 5.8.2
 					testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.8.2' // e.g.: 5.8.2
+					]]>
 				</codesnippet>
 				<codesnippet language="kotlin" info="Optional JUnit 5 Jupiter Params for parameterized tests">
+					<![CDATA[
 					testImplementation 'org.junit.jupiter:junit-jupiter-params:5.8.2' // e.g.: 5.8.2
+					]]>
 				</codesnippet>
 				<codesnippet language="kotlin" info="Optional JUnit 5 Vintage Engine to run JUnit 4 tests with JUnit 5">
+					<![CDATA[
 					testImplementation 'org.junit.vintage:junit-vintage-engine:5.8.2' // e.g.: 5.8.2
+					]]>
 				</codesnippet>
 				<codesnippet language="kotlin" info="RunJUnit 5 tests">
+					<![CDATA[
 					test {
 						useJUnitPlatform()
 					}
+					]]>
 				</codesnippet>
 			</tab>
 		</tabs>
@@ -99,13 +107,16 @@
 
 	<section title="Java import statements">
 		<codesnippet language="java" info="Next import statements are necessary">
+			<![CDATA[
 			import org.junit.jupiter.api.*; 
 			import static org.junit.jupiter.api.Assertions.*;
+			]]>
 		</codesnippet>
 	</section>
 
 	<section title="Class/method access modifiers">
 		<codesnippet language="java" info="No class/method access modifiers are necessary">
+			<![CDATA[
 			...
 			class MyTest {
 				...
@@ -115,6 +126,7 @@
 				}
 				...
 			}
+			]]>
 		</codesnippet>
 	</section>
 
@@ -122,38 +134,47 @@
 		<tabs id="junit-5-annotations" info="Next annotations control the setup, execution, teardown, and conditional disabling of test methods in JUnit 5">
 			<tab id="junit-5-annotations-beforeall" label="@BeforeAll" info="Runs once before all tests in the class; used for one-time setup">
 				<codesnippet language="java">
+					<![CDATA[
 					@BeforeAll
 					static void setupBeforeAll() {
 						...
 					}
+					]]>
 				</codesnippet>
 			</tab>
 			<tab id="junit-5-annotations-beforeach" label="@BeforeEach" info="Runs before each individual test method; used to set up test conditions">
 				<codesnippet language="java">
+					<![CDATA[
 					@BeforeEach
 					void setupBeforeEach() {
 						...
 					}
+					]]>
 				</codesnippet>
 			</tab>
 			<tab id="junit-5-annotations-aftereach" label="@AfterEach" info="Runs after each individual test method; used for cleanup after tests">
 				<codesnippet language="java">
+					<![CDATA[
 					@AfterEach
 					void teardownAfterEach() {
 						...
 					}
+					]]>
 				</codesnippet>
 			</tab>
 			<tab id="junit-5-annotations-afterall" label="@AfterAll" info="Runs once after all tests in the class; used for one-time cleanup">
 				<codesnippet language="java">
+					<![CDATA[
 					@AfterAll
 					static void teardownAfterAll() {
 						...
 					}
+					]]>
 				</codesnippet>
 			</tab>
 			<tab id="junit-5-annotations-disabled" label="@Disabled" info="Disables a test method or class so it will not run">
 				<codesnippet language="java" info="Example of a disabled test class">
+					<![CDATA[
 					@Disabled
 					class MyTest {
 
@@ -167,8 +188,10 @@
 							...
 						}
 					}
+					]]>
 				</codesnippet>
 				<codesnippet language="java" info="Example of a disabled test method">
+					<![CDATA[
 					class MyTest {
 						...
 						@Test
@@ -182,14 +205,17 @@
 							...
 						}
 					}
+					]]>
 				</codesnippet>
 			</tab>
 			<tab id="junit-5-annotations-test" label="@Test" info="Marks a method as a test case to be executed">
 				<codesnippet language="java">
+					<![CDATA[
 					@Test
 					void testMyMethod() {
 						...
 					}
+					]]>
 				</codesnippet>
 			</tab>
 		</tabs>
@@ -226,11 +252,15 @@
 		<tabs id="junit-5-mockito-integration" info="Mockito integration with JUnit 5 can be done in two ways: class-level integration and method-level integration">		
 			<tab id="junit-5-mockito-integration-class-level" label="Class level integration">
 				<codesnippet language="java" info="Add next import statements">
+					<![CDATA[
 					import org.junit.jupiter.api.extension.ExtendWith;
 					import org.mockito.junit.jupiter.MockitoExtension;
+					]]>
 				</codesnippet>
 				<codesnippet language="java" info="Integrate Mockito with the JUnit 5 lifecycle">
+					<![CDATA[
 					@ExtendWith(MockitoExtension.class)
+					]]>
 				</codesnippet>
 				<codesnippet language="java" info="Complete example">
                     <![CDATA[
@@ -271,13 +301,17 @@
 			</tab>
 			<tab id="junit-5-mockito-integration-method-level" label="Method level integration">
 				<codesnippet language="java" info="Add next import statements">
+					<![CDATA[
 					import org.mockito.MockitoAnnotations;
+					]]>
 				</codesnippet>
 				<codesnippet language="java" info="explicitly create mocks using Mockito.mock() or initialize annotated mocks with MockitoAnnotations.openMocks(this) within each test method">
+					<![CDATA[
 					@BeforeEach
 					void setUp() { 
 						MockitoAnnotations.openMocks(this);
 					}
+					]]>
 				</codesnippet>
 				<codesnippet language="java" info="Complete example">
                     <![CDATA[
