@@ -19,6 +19,7 @@
 			<xs:sequence>
 				<xs:choice minOccurs="0" maxOccurs="unbounded">
 					<xs:element ref="codesnippet"/>
+					<xs:element ref="table"/>
 					<xs:element ref="tabs"/>
 				</xs:choice>
 			</xs:sequence>
