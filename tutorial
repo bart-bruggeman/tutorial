@@ -1,6 +1,19 @@
 #!/bin/bash
 set -e  # Stop bij fouten
-set -u  # Stop bij gebruik van niet-gedefinieerde variabelen
+
+# check if a specific file parameter is given
+if [ -z "$1" ]; then
+    # no parameter, process all XML files
+    XML_FILES=(data/*.xml)
+else
+    # parameter given, process only that file in data directory
+    FILE="data/$1.xml"
+    if [ ! -f "$FILE" ]; then
+        echo "File $FILE not found!"
+        exit 1
+    fi
+    XML_FILES=("$FILE")
+fi
 
 # versies
 SAXON_HE_VERSION="12.8"
