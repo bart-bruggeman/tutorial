@@ -29,7 +29,7 @@
 					<link id="prism-light" rel="stylesheet" href="assets/css/prism.min.css"/>	
 					<link id="prism-nord" rel="stylesheet" href="assets/css/prism-nord.min.css"/>
 					<!-- tutorial -->
-					<link rel="stylesheet" href="assets/css/tutorial.min.css"/>	
+					<link rel="stylesheet" href="assets/css/tutorial.css"/>	
 				</head>
 				<body>
 					<nav class="navbar navbar-expand-lg navbar-light py-2 border-bottom">
@@ -74,7 +74,7 @@
 					<script src="assets/js/prism-kotlin.min.js"></script>
 					<script src="assets/js/prism-markup.min.js"></script>
 					<!-- tutorial -->
-					<script src="assets/js/tutorial.min.js"></script>
+					<script src="assets/js/tutorial.js"></script>
 				</body>
 			</html>
 		</xsl:result-document>
