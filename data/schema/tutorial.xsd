@@ -63,7 +63,7 @@
 
     <!-- listitem -->
     <xs:element name="listitem">
-        <xs:complexType>
+        <xs:complexType mixed="true">
             <xs:sequence>
                 <xs:choice minOccurs="0" maxOccurs="unbounded">
                     <xs:element ref="codesnippet"/>
@@ -71,6 +71,7 @@
                     <xs:element ref="list"/>
                     <xs:element ref="table"/>
 					<xs:element ref="tabs"/>
+					<!-- plain text is also accepted due to mixed="true" @ xs:complexType-->
                 </xs:choice>
             </xs:sequence>
         </xs:complexType>
@@ -83,8 +84,14 @@
 				<xs:element ref="header" minOccurs="0" maxOccurs="1"/>
 				<xs:element ref="data" minOccurs="1" maxOccurs="unbounded"/>
 			</xs:sequence>
+			<xs:attributeGroup ref="tableAttributes"/>
 		</xs:complexType>
 	</xs:element>
+
+    <xs:attributeGroup name="tableAttributes">
+        <xs:attribute name="title" type="xs:string" use="required"/>
+    </xs:attributeGroup>
+
 
 	<!-- table - header -->
 	<xs:element name="header">
@@ -107,12 +114,13 @@
 	</xs:element>
     
 	<xs:element name="dataitem">
-		<xs:complexType>
+		<xs:complexType mixed="true">
 			<xs:sequence>
 				<xs:choice minOccurs="0" maxOccurs="unbounded">
 					<xs:element ref="codesnippet"/>
 					<xs:element ref="paragraph"/>
 					<xs:element ref="list"/>
+					<!-- plain text is also accepted due to mixed="true" @ xs:complexType-->
 				</xs:choice>
 			</xs:sequence>
 		</xs:complexType>
@@ -135,7 +143,7 @@
 
     <!-- tab -->
     <xs:element name="tab">
-        <xs:complexType>
+        <xs:complexType mixed="true">
             <xs:sequence>
                 <xs:choice minOccurs="0" maxOccurs="unbounded">
                     <xs:element ref="codesnippet"/>
@@ -143,6 +151,7 @@
                     <xs:element ref="list"/>
                     <xs:element ref="table"/>
 					<xs:element ref="tabs"/>
+					<!-- plain text is also accepted due to mixed="true" @ xs:complexType-->
                 </xs:choice>
             </xs:sequence>
             <xs:attributeGroup ref="tabAttributes"/>

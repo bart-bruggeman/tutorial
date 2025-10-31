@@ -15,24 +15,30 @@
 		<data>
 			<dataitem>Dependencies</dataitem>
 			<dataitem>junit:junit:4.x.x</dataitem>
-			<dataitemlist>
-				<listitem>org.junit.jupiter:junit-jupiter-api:5.x.x</listitem>
-				<listitem>org.junit.jupiter:junit-jupiter-engine:5.x.x</listitem>
-				<listitem>org.junit.jupiter:junit-jupiter-params:5.x.x</listitem>
-				<listitem>org.junit.vintage:junit-vintage-engine:5.x.x</listitem>
-				<listitem>org.junit.platform:junit-platform-runner:1.x.x</listitem>
-            </dataitemlist>
+			<dataitem>
+				<list>
+					<listitem>org.junit.jupiter:junit-jupiter-api:5.x.x</listitem>
+					<listitem>org.junit.jupiter:junit-jupiter-engine:5.x.x</listitem>
+					<listitem>org.junit.jupiter:junit-jupiter-params:5.x.x</listitem>
+					<listitem>org.junit.vintage:junit-vintage-engine:5.x.x</listitem>
+					<listitem>org.junit.platform:junit-platform-runner:1.x.x</listitem>
+				</list>
+            </dataitem>
 		</data>
 		<data>
 			<dataitem>Import statements	</dataitem>
-			<dataitemlist>
-				<listitem>import org.junit.*;</listitem>
-				<listitem>import static org.junit.Assert.*;</listitem>
-			</dataitemlist>
-			<dataitemlist>
-				<listitem>import org.junit.jupiter.api.*;</listitem>
-				<listitem>import static org.junit.jupiter.api.Assertions.*;</listitem>
-			</dataitemlist>
+			<dataitem>
+				<list>
+					<listitem>import org.junit.*;</listitem>
+					<listitem>import static org.junit.Assert.*;</listitem>
+				</list>
+			</dataitem>
+			<dataitem>
+				<list>
+					<listitem>import org.junit.jupiter.api.*;</listitem>
+					<listitem>import static org.junit.jupiter.api.Assertions.*;</listitem>
+				</list>
+			</dataitem>
 		</data>
 		<data>
 			<dataitem>Class and method access modifier</dataitem>
@@ -41,22 +47,26 @@
 		</data>
 		<data>
 			<dataitem>Speciale annotations</dataitem>
-			<dataitemlist>
-				<listitem>@BeforeClass</listitem>
-				<listitem>@Before</listitem>
-				<listitem>@After</listitem>
-				<listitem>@AfterClass</listitem>
-				<listitem>@Ignore</listitem>
-				<listitem>@Test</listitem>
-			</dataitemlist>
-			<dataitemlist>
-				<listitem>@BeforeAll</listitem>
-				<listitem>@BeforeEach</listitem>
-				<listitem>@AfterEach</listitem>
-				<listitem>@AfterAll</listitem>
-				<listitem>@Disabled</listitem>
-				<listitem>@Test</listitem>
-			</dataitemlist>
+			<dataitem>
+				<list>
+					<listitem>@BeforeClass</listitem>
+					<listitem>@Before</listitem>
+					<listitem>@After</listitem>
+					<listitem>@AfterClass</listitem>
+					<listitem>@Ignore</listitem>
+					<listitem>@Test</listitem>
+				</list>
+			</dataitem>
+			<dataitem>
+				<list>
+					<listitem>@BeforeAll</listitem>
+					<listitem>@BeforeEach</listitem>
+					<listitem>@AfterEach</listitem>
+					<listitem>@AfterAll</listitem>
+					<listitem>@Disabled</listitem>
+					<listitem>@Test</listitem>
+				</list>
+			</dataitem>
 		</data>
 		<data>
 			<dataitem>Exception testing</dataitem>
