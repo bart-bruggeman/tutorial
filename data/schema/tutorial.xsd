@@ -1,42 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
-	<xs:element name="tutorial">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:choice minOccurs="0" maxOccurs="unbounded">
-					<xs:element ref="section" maxOccurs="unbounded"/>
-					<xs:element ref="table" maxOccurs="unbounded"/>
-				</xs:choice>
-			</xs:sequence>
-			<xs:attributeGroup ref="tutorialAttributes"/>
-		</xs:complexType>
-	</xs:element>
+    <!-- tutorial -->
+    <xs:element name="tutorial">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="section" minOccurs="1" maxOccurs="unbounded"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="tutorialAttributes"/>
+        </xs:complexType>
+    </xs:element>
 
-	<xs:element name="section">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:choice minOccurs="0" maxOccurs="unbounded">
-					<xs:element ref="codesnippet"/>
-					<xs:element ref="table"/>
+    <xs:attributeGroup name="tutorialAttributes">
+        <xs:attribute name="id" type="xs:string" use="required"/>
+        <xs:attribute name="name" type="xs:string" use="required"/>
+        <xs:attribute name="filename" type="xs:string" use="required"/>
+    </xs:attributeGroup>
+
+    <!-- section -->
+    <xs:element name="section">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                    <xs:element ref="codesnippet"/>
+                    <xs:element ref="paragraph"/>
+                    <xs:element ref="list"/>
+                    <xs:element ref="table"/>
 					<xs:element ref="tabs"/>
-				</xs:choice>
-			</xs:sequence>
-			<xs:attributeGroup ref="chapterAttributes"/>
-		</xs:complexType>
-	</xs:element>
+                </xs:choice>
+            </xs:sequence>
+            <xs:attributeGroup ref="sectionAttributes"/>
+        </xs:complexType>
+    </xs:element>
 
-	<xs:element name="list">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element ref="listitem" maxOccurs="unbounded"/>
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
+	<xs:attributeGroup name="sectionAttributes">
+		<xs:attribute name="title" type="xs:string" use="required"/>
+	</xs:attributeGroup>
 
-	<xs:element name="listitem" type="xs:string"/>
+    <!-- code snippet -->
+    <xs:element name="codesnippet">
+        <xs:complexType mixed="true">
+            <xs:attributeGroup ref="codeSnippetsAttributes"/>
+        </xs:complexType>
+    </xs:element>
 
+    <xs:attributeGroup name="codeSnippetsAttributes">
+        <xs:attribute name="language" type="xs:string" use="required"/>
+        <xs:attribute name="info" type="xs:string" use="optional"/>
+    </xs:attributeGroup>
+
+    <!-- paragraph -->
+    <xs:element name="paragraph" type="xs:string"/>
+
+    <!-- list -->
+    <xs:element name="list">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="listitem" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- listitem -->
+    <xs:element name="listitem">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                    <xs:element ref="codesnippet"/>
+                    <xs:element ref="paragraph"/>
+                    <xs:element ref="list"/>
+                    <xs:element ref="table"/>
+					<xs:element ref="tabs"/>
+                </xs:choice>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+	<!-- table -->
 	<xs:element name="table">
 		<xs:complexType>
 			<xs:sequence>
@@ -46,6 +86,7 @@
 		</xs:complexType>
 	</xs:element>
 
+	<!-- table - header -->
 	<xs:element name="header">
 		<xs:complexType>
 			<xs:sequence>
@@ -56,73 +97,62 @@
 
 	<xs:element name="headeritem" type="xs:string"/>
 
+	<!-- table - data -->
 	<xs:element name="data">
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element ref="dataitem" minOccurs="1" maxOccurs="unbounded"/>
-				<xs:element ref="dataitemlist" minOccurs="1" maxOccurs="unbounded"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-
-	<xs:element name="dataitem" type="xs:string"/>
-
-	<xs:element name="dataitemlist">
+    
+	<xs:element name="dataitem">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element ref="listitem" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:choice minOccurs="0" maxOccurs="unbounded">
+					<xs:element ref="codesnippet"/>
+					<xs:element ref="paragraph"/>
+					<xs:element ref="list"/>
+				</xs:choice>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
 
-	<xs:element name="tabs">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element ref="tab" maxOccurs="unbounded"/>
-			</xs:sequence>
-			<xs:attributeGroup ref="tabsAttributes"/>
-		</xs:complexType>
-	</xs:element>
+    <!-- tabs / tab -->
+    <xs:element name="tabs">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="tab" maxOccurs="unbounded"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="tabsAttributes"/>
+        </xs:complexType>
+    </xs:element>
 
-	<xs:element name="tab">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element ref="codesnippet" maxOccurs="unbounded"/>
-			</xs:sequence>
-			<xs:attributeGroup ref="tabAttributes"/>
-		</xs:complexType>
-	</xs:element>
+    <xs:attributeGroup name="tabsAttributes">
+        <xs:attribute name="id" type="xs:string" use="required"/>
+        <xs:attribute name="info" type="xs:string" use="optional"/>
+    </xs:attributeGroup>
 
-	<xs:element name="codesnippet">
-		<xs:complexType mixed="true"> <!-- allows text and CDATA content -->
-			<xs:attributeGroup ref="codeSnippetsAttributes"/>
-		</xs:complexType>
-	</xs:element>
+    <!-- tab -->
+    <xs:element name="tab">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                    <xs:element ref="codesnippet"/>
+                    <xs:element ref="paragraph"/>
+                    <xs:element ref="list"/>
+                    <xs:element ref="table"/>
+					<xs:element ref="tabs"/>
+                </xs:choice>
+            </xs:sequence>
+            <xs:attributeGroup ref="tabAttributes"/>
+        </xs:complexType>
+    </xs:element>
 
-	<xs:attributeGroup name="chapterAttributes">
-		<xs:attribute name="title" type="xs:string" use="required"/>
-	</xs:attributeGroup>
-
-	<xs:attributeGroup name="codeSnippetsAttributes">
-		<xs:attribute name="language" type="xs:string" use="required"/>
-		<xs:attribute name="info" type="xs:string" use="optional"/>
-	</xs:attributeGroup>
-
-	<xs:attributeGroup name="tabAttributes">
-		<xs:attribute name="id" type="xs:string" use="required"/>
-		<xs:attribute name="label" type="xs:string" use="required"/>
-		<xs:attribute name="info" type="xs:string" use="optional"/>
-	</xs:attributeGroup>
-
-	<xs:attributeGroup name="tabsAttributes">
-		<xs:attribute name="id" type="xs:string" use="required"/>
-		<xs:attribute name="info" type="xs:string" use="optional"/>
-	</xs:attributeGroup>
-
-	<xs:attributeGroup name="tutorialAttributes">
-		<xs:attribute name="id" type="xs:string" use="required"/>
-		<xs:attribute name="name" type="xs:string" use="required"/>
-		<xs:attribute name="filename" type="xs:string" use="required"/>
-	</xs:attributeGroup>
+    <xs:attributeGroup name="tabAttributes">
+        <xs:attribute name="id" type="xs:string" use="required"/>
+        <xs:attribute name="label" type="xs:string" use="required"/>
+        <xs:attribute name="info" type="xs:string" use="optional"/>
+    </xs:attributeGroup>
 
 </xs:schema>
