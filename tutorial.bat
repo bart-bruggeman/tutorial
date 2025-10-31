@@ -17,7 +17,7 @@ if "%~1"=="" (
 )
 
 :: versions
-set "SAXON_HE_VERSION=12.8"
+set "SAXON_HE_VERSION=12.9"
 set "XML_RESOLVER_VERSION=5.3.3"
 set "XMLVALIDATOR_VERSION=1.0-SNAPSHOT"
 
