@@ -227,19 +227,25 @@
 			class MyTest {
 				
 				private final MyClass myClass = new MyClass();
+
+				// test occurence of an Exception
+				@Test
+				void testExceptionThrown() {
+					assertThrows(IllegalArgumentException.class,
+						() -> myClass.methodThatThrowsIllegalArgumentException(someIllegalValue));
+				}
 				
 				// test occurence of an Exception and message of an Exception
 				@Test
 				void testExceptionThrownWithMessage() {
 					Exception e = assertThrows(IllegalArgumentException.class,
-						() -> {	myClass.methodThatThrowsIllegalArgumentException(someIllegalValue); });
+						() -> myClass.methodThatThrowsIllegalArgumentException(someIllegalValue));
 					assertEquals("Invalid argument", e.getMessage());
 				}
 
 				// test no occurence of an exception
 				@Test
 				void testMethodDoesNotThrowException() {
-					MyClass myClass = new MyClass();
 					assertDoesNotThrow(
 						() -> myClass.methodThatShouldNotThrowException());
 				}

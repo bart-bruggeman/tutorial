@@ -135,7 +135,7 @@
 					]]>
 				</codesnippet>
 			</tab>
-			<tab id="junit-5-annotations-test" label="@Test" info="Marks a method as a test case to be executed">
+			<tab id="junit-4-annotations-test" label="@Test" info="Marks a method as a test case to be executed">
 				<codesnippet language="java">
 					<![CDATA[
 					@Test
@@ -149,7 +149,7 @@
 	</section>
 
 	<section title="How to test exceptions">
-		<codesnippet language="java" info="Complete example">
+		<codesnippet language="java" info="Complete example (old style)">
             <![CDATA[
 			import org.junit.Test;
 			import static org.junit.Assert.*;
@@ -181,6 +181,46 @@
 					myClass.methodThatShouldNotThrowException();
 				}
 
+			}
+            ]]>
+		</codesnippet>
+
+		<codesnippet language="java" info="Complete example (new style with ExpectedException Rule)">
+            <![CDATA[
+			import org.junit.Rule;
+			import org.junit.Test;
+			import org.junit.rules.ExpectedException;
+
+			import static org.junit.Assert.*;
+
+			public class MyTest {
+
+				private final MyClass myClass = new MyClass();
+
+				@Rule
+				public ExpectedException thrown = ExpectedException.none();
+
+				// test occurrence of an Exception
+				@Test
+				public void testExceptionThrown() {
+					thrown.expect(IllegalArgumentException.class);
+					myClass.methodThatThrowsIllegalArgumentException(someIllegalValue);
+				}
+
+				// test message of an Exception
+				@Test
+				public void testExceptionMessage() {
+					thrown.expect(IllegalArgumentException.class);
+					thrown.expectMessage("Invalid argument");
+					myClass.methodThatThrowsIllegalArgumentException(someIllegalValue);
+				}
+
+				// test no occurrence of an exception
+				@Test
+				public void methodDoesNotThrowException() {
+					myClass.methodThatShouldNotThrowException();
+				}
+				
 			}
             ]]>
 		</codesnippet>
