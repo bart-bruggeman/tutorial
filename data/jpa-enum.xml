@@ -6,7 +6,7 @@
 
 	<section title="JPA Enumeration types">
 		<paragraph>Er zijn 3 verschillende manieren om een enumeration te mappen:</paragraph>
-		<list hasBullets="true">
+		<list bullets="true">
 			<listitem>Mappen via een ordinal value</listitem>
 			<listitem>Mappen via een String value</listitem>
 			<listitem>Mappen via een @Converter annotation</listitem>
