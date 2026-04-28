@@ -58,8 +58,13 @@
             <xs:sequence>
                 <xs:element ref="listitem" maxOccurs="unbounded"/>
             </xs:sequence>
+            <xs:attributeGroup ref="listAttributes"/>
         </xs:complexType>
     </xs:element>
+
+    <xs:attributeGroup name="listAttributes">
+        <xs:attribute name="bullets" type="xs:boolean" use="optional" default="false"/>
+    </xs:attributeGroup>
 
     <!-- listitem -->
     <xs:element name="listitem">

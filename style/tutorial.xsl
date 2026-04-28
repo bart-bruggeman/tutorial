@@ -173,11 +173,14 @@
 	</xsl:template>
 
 	<!-- list -->
-	<xsl:template match="list">
-		<ul class="list-unstyled mb-0">
-			<xsl:apply-templates/>
-		</ul>
-	</xsl:template>
+<xsl:template match="list">
+    <ul>
+        <xsl:if test="@bullets = 'false'">
+            <xsl:attribute name="class">list-unstyled mb-0</xsl:attribute>
+        </xsl:if>
+        <xsl:apply-templates/>
+    </ul>
+</xsl:template>
 
 	<xsl:template match="listitem">
 		<li><xsl:apply-templates/></li>

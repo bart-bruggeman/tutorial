@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<tutorial xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	      xsi:noNamespaceSchemaLocation="schema/tutorial.xsd"
+	id="jpa-enum" name="JPA Enumeration" filename="jpa-enum.html">
+
+	<section title="JPA Enumeration types">
+		<paragraph>Er zijn 3 verschillende manieren om een enumeration te mappen:</paragraph>
+		<list hasBullets="true">
+			<listitem>Mappen via een ordinal value</listitem>
+			<listitem>Mappen via een String value</listitem>
+			<listitem>Mappen via een @Converter annotation</listitem>
+		</list>
+		<tabs id="jpa-enum-tabs">
+			<tab id="jpa-ordinal-value" label="Ordinal value" info="Hierbij wordt de ordinal value bewaard in DB. Wanneer de volgorde van de enums wijzigt klopt de DB waarde niet meer.">
+				<codesnippet language="java">
+					<![CDATA[
+						public enum Status {
+							OPEN,     // value in DB is 0 (ordinal = 0)
+							REVIEW,   // value in DB is 1 (ordinal = 1)
+							APPROVED; // value in DB is 2 (ordinal = 2)
+						}
+					]]>
+				</codesnippet>
+			</tab>
+			<tab id="jpa-string-value" label="String value" info="Hierbij wordt de enum naam bewaard in DB. Wanneer de enum naam wijzigt klopt de DB waarde niet meer.">
+				<codesnippet language="java">
+					<![CDATA[
+						public enum Status {
+							OPEN,     // value in DB is OPEN
+							REVIEW,   // value in DB is REVIEW
+							APPROVED; // value in DB is APPROVED
+						}
+					]]>
+				</codesnippet>
+			</tab>
+			<tab id="jpa-enum-converter-annotation" label="@Converter annotation" info="Hierbij wordt de enum value bewaard in DB.">
+				<codesnippet language="java" info="Add next import statements">
+					<![CDATA[
+						public enum Status {
+							OPEN ("O"),     // value in DB is O
+							REVIEW ("R"),   // value in DB is R
+							APPROVED ("A"); // value in DB is A
+							
+							private String code;
+							
+							private Status(String code) {
+								this.code = code;
+							}
+							
+							public String getCode() {
+								return this.code;
+							}
+						}
+					]]>
+				</codesnippet>
+				<codesnippet language="java">
+					<![CDATA[
+						@Entity
+						public class Article {
+							
+							private Status status;
+						}
+					]]>
+				</codesnippet>
+				<codesnippet language="java">
+                    <![CDATA[			
+						@Converter(autoApply = true)
+						public class StatusConverter implements AttributeConverter<Status, String> {
+
+							@Override
+							public String convertToDatabaseColumn(Status status) {
+								if (status == null) {
+									return null;
+								}
+								return status.getCode();
+							}
+							
+							@Override
+							public Status convertToEntityAttribute(String code) {
+								if (code == null) {
+									return null;
+								}
+								return Stream.of(Status.values())
+									.filter(s -> s.getCode().equals(code))
+									.findFirst()
+									.orElseThrow(IllegalArgumentException::new);
+							}
+						}
+                    ]]>
+				</codesnippet>
+			</tab>
+		</tabs>
+	</section>
+	
+</tutorial>
